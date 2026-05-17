@@ -1,5 +1,5 @@
 // Script untuk form RSVP
-document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+document.getElementById('rsvpForm').addEventListener('submit',async  function(e) {
   e.preventDefault();
 
   const name = document.getElementById('name').value;
@@ -11,13 +11,29 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     return;
   }
 
-  // Simulasi pengiriman data
-  console.log({
-    name,
-    email,
-    attendance,
-    date: new Date().toISOString()
-  });
+const data = {
+    nama: name,
+    email: email,
+    kehadiran: attendance
+  };
+
+  try {
+
+await fetch('https://script.google.com/macros/s/AKfycbx9Yz9t_--3rZdeoBdFHf_D6swA4aQqgwRO5XfCGuGoZfysdbPscBbyAq5hp8l9JLli/exec', {
+  method: 'POST',
+  mode: 'no-cors',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+});
+
+  } catch (error) {
+
+    alert('Terjadi kesalahan.');
+    console.log(error);
+
+  }
 
   // Tampilkan pesan sukses
   alert(`Terima kasih, ${name}! Konfirmasi kehadiran Anda telah diterima.`);
